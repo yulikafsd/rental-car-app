@@ -40,9 +40,10 @@ export interface FilterMetadata {
 
 export interface CarFilters {
     brand?: string;
-    price?: number;
+    pricePerHour?: number;
     minMileage?: number;
     maxMileage?: number;
+    onlyFavorites?: boolean;
 }
 
 export interface BookingRequest {

@@ -26,17 +26,33 @@ export interface SendBookingParams {
     bookingData: BookingRequest;
 }
 
+const FILTER_KEY_MAP: Record<keyof Omit<CarFilters, "onlyFavorites">, string> =
+    {
+        brand: "brand",
+        pricePerHour: "price",
+        minMileage: "minMileage",
+        maxMileage: "maxMileage",
+    };
+
 export const fetchCars = async ({
     page = 1,
     perPage = 12,
     filters = {},
 }: FetchCarsParams = {}): Promise<CarsResponse> => {
+    const queryParams: Record<string, unknown> = {
+        page,
+        perPage,
+    };
+
+    Object.entries(filters).forEach(([key, val]) => {
+        const apiKey = FILTER_KEY_MAP[key as keyof typeof FILTER_KEY_MAP];
+        if (apiKey && val !== undefined && val !== "") {
+            queryParams[apiKey] = val;
+        }
+    });
+
     const { data } = await apiClient.get<CarsResponse>("/cars", {
-        params: {
-            page,
-            perPage,
-            ...filters,
-        },
+        params: queryParams,
     });
     return data;
 };
