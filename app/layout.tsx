@@ -4,8 +4,8 @@ import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 import QueryProvider from "@/providers/QueryProvider";
-// import Header from "@/components/Header/Header";
-// import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 const manrope = Manrope({
     subsets: ["latin"],
@@ -17,18 +17,21 @@ const manrope = Manrope({
 export const metadata: Metadata = {
     title: "Rental Car App",
     description: "Find and rent your perfect car easily and quickly.",
+    icons: {
+        icon: "/favicon.png",
+    },
     openGraph: {
         title: "Rental Car App",
         description: "Find and rent your perfect car easily and quickly.",
         url: "https://rental-car-app-yu-za.vercel.app/",
-        // images: [
-        //     {
-        //         url: "",
-        //         width: 1200,
-        //         height: 630,
-        //         alt: "Rental Car Preview",
-        //     },
-        // ],
+        images: [
+            {
+                url: "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                width: 1440,
+                height: 700,
+                alt: "Rental Car Preview",
+            },
+        ],
         type: "website",
     },
 };
@@ -42,10 +45,10 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
         <html lang="en">
             <body className={manrope.variable} suppressHydrationWarning>
                 <QueryProvider>
-                    {/* <Header /> */}
+                    <Header />
                     <main>{children}</main>
                     <Toaster position="top-right" />
-                    {/* <Footer /> */}
+                    <Footer />
                 </QueryProvider>
             </body>
         </html>
