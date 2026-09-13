@@ -1,3 +1,9 @@
+.contentContainer {
+    position: relative;
+    min-height: 480px;
+    width: 100%;
+}
+
 .carsGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

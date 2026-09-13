@@ -1,4 +1,6 @@
 .header {
+    position: relative;
+    z-index: 50;
     width: 100%;
     border-bottom: 1px solid var(--color-bg-light);
     background-color: var(--color-white);

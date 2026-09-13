@@ -1,10 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+
 import Filters from "@/components/Filters/Filters";
 import CarCard from "@/components/CarCard/CarCard";
 import Button from "@/components/Button/Button";
+import Loader from "@/components/Loader/Loader";
+import NoResults from "@/components/NoResults/NoResults";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+
 import { useCars } from "@/hooks/useCars";
 import { useCarFilters } from "@/hooks/useCarFilters";
 import { useFavoritesStore } from "@/store/useFavoritesStore";
@@ -12,6 +17,9 @@ import { CarFilters } from "@/types/car";
 import styles from "./CatalogView.module.css";
 
 export default function CatalogView() {
+    const router = useRouter();
+    const pathname = usePathname();
+
     const searchParams = useSearchParams();
     const { favorites } = useFavoritesStore();
 
@@ -36,10 +44,12 @@ export default function CatalogView() {
     const {
         data,
         isLoading,
+        isFetching,
         isError,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
+        refetch,
     } = useCars({ filters });
 
     const allCars = useMemo(() => {
@@ -58,72 +68,62 @@ export default function CatalogView() {
     };
 
     const handleResetFilters = () => {
+        router.push(pathname, { scroll: false });
         setFilters({});
     };
+
+    const showListLoader = isLoading || (isFetching && !isFetchingNextPage);
 
     return (
         <section aria-labelledby="catalog-heading">
             <h2 id="catalog-heading" className="visually-hidden">
                 Available Cars
             </h2>
+
             <Filters
                 key={searchParams.toString()}
                 brandsList={brandsList}
                 onApplyFilters={handleApplyFilters}
                 onResetFilters={handleResetFilters}
+                isLoading={showListLoader}
             />
-            {isLoading && (
-                <div
-                    role="status"
-                    aria-live="polite"
-                    className={styles.loadingWrapper}
-                >
-                    <h3>Loading cars...</h3>
-                    <p>Please wait while we fetch the best cars for you</p>
-                </div>
-            )}
-            {isError && (
-                <div role="alert" className={styles.errorWrapper}>
-                    <h3>Error loading cars</h3>
-                    <p>Failed to load the car list. Please try again later.</p>
-                </div>
-            )}
-            {!isLoading && !isError && displayedCars.length === 0 && (
-                <div className={styles.emptyStateWrapper}>
-                    <h3>No cars found</h3>
-                    <p>
-                        We couldn’t find any cars that match your current
-                        filters. Try changing your search criteria or reset the
-                        filters.
-                    </p>
-                    <Button
-                        variant="outline"
-                        size="compact"
-                        onClick={handleResetFilters}
-                    >
-                        Reset filters
-                    </Button>
-                </div>
-            )}
-            {!isLoading && displayedCars.length > 0 && (
-                <div className={styles.carsGrid}>
-                    {displayedCars.map((car) => (
-                        <CarCard key={car.id} car={car} />
-                    ))}
-                </div>
-            )}
-            {!isLoading && hasNextPage && !filters.onlyFavorites && (
-                <div className={styles.loadMoreWrapper}>
-                    <Button
-                        variant="outline"
-                        size="compact"
-                        onClick={() => fetchNextPage()}
-                        disabled={isFetchingNextPage}
-                    >
-                        {isFetchingNextPage ? "Loading..." : "Load more"}
-                    </Button>
-                </div>
-            )}
+
+            <div className={styles.contentWrapper}>
+                {showListLoader && <Loader />}
+
+                {isError && (
+                    <ErrorMessage
+                        title="Error loading cars"
+                        message="Failed to load the car list. Please try again later."
+                        onRetry={() => refetch()}
+                    />
+                )}
+
+                {!isLoading && !isError && displayedCars.length === 0 && (
+                    <NoResults onReset={handleResetFilters} />
+                )}
+
+                {displayedCars.length > 0 && (
+                    <div className={styles.carsGrid}>
+                        {displayedCars.map((car) => (
+                            <CarCard key={car.id} car={car} />
+                        ))}
+                    </div>
+                )}
+
+                {!isLoading && hasNextPage && !filters.onlyFavorites && (
+                    <div className={styles.loadMoreWrapper}>
+                        <Button
+                            variant="outline"
+                            size="compact"
+                            onClick={() => fetchNextPage()}
+                            disabled={isFetchingNextPage || showListLoader}
+                        >
+                            {isFetchingNextPage ? "Loading..." : "Load more"}
+                        </Button>
+                    </div>
+                )}
+            </div>
         </section>
     );
 }

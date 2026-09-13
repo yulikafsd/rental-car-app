@@ -15,6 +15,7 @@ interface FiltersProps {
     brandsList: string[];
     onApplyFilters: (filters: CarFilters) => void;
     onResetFilters: () => void;
+    isLoading?: boolean;
 }
 
 interface FormValues {
@@ -44,6 +45,7 @@ export default function Filters({
     brandsList,
     onApplyFilters,
     onResetFilters,
+    isLoading = false,
 }: FiltersProps) {
     const router = useRouter();
     const pathname = usePathname();
@@ -141,13 +143,19 @@ export default function Filters({
             </CustomCheckbox>
 
             <div className={styles.filterActions}>
-                <Button type="submit" variant="primary" size="compact">
+                <Button
+                    type="submit"
+                    variant="primary"
+                    size="compact"
+                    disabled={isLoading}
+                >
                     Search
                 </Button>
                 <button
                     type="button"
                     className={styles.clearFiltersButton}
                     onClick={handleReset}
+                    disabled={isLoading}
                 >
                     Clear filters
                 </button>

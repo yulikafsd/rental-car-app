@@ -1,0 +1,68 @@
+.overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(245, 245, 245, 0.89);
+    backdrop-filter: blur(2px);
+    border-radius: 16px;
+    pointer-events: all;
+    touch-action: none;
+}
+
+.modalCard {
+    position: sticky;
+    top: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 543px;
+    padding: 48px;
+    background-color: var(--color-white);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.spinner {
+    --color-1: var(--color-gray-200);
+    --color-2: var(--color-light-blue);
+    --size: 1.5px;
+
+    width: calc(48 * var(--size));
+    height: calc(48 * var(--size));
+    border: calc(5 * var(--size)) solid var(--color-1);
+    border-bottom-color: var(--color-2);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin-bottom: 32px;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.33;
+    color: var(--color-dark);
+    margin-bottom: 18px;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--color-dark);
+}

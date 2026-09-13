@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
 import { fetchCars } from "@/services/api";
 import { CarFilters, CarsResponse } from "@/types/car";
 
@@ -23,5 +23,6 @@ export const useCars = ({ filters, perPage = 12 }: UseCarsParams) => {
             }
             return undefined;
         },
+        placeholderData: keepPreviousData,
     });
 };

@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+
 import CatalogView from "./CatalogView";
+import Loader from "@/components/Loader/Loader";
 
 export const metadata: Metadata = {
     title: "Car Catalog | RentalCar",
@@ -27,17 +29,7 @@ export default function CatalogPage() {
     return (
         <div className="container">
             <h1 className="visually-hidden">Car Rental Catalog</h1>
-            <Suspense
-                fallback={
-                    <div
-                        role="status"
-                        aria-live="polite"
-                        className="loadingWrapper"
-                    >
-                        <p>Loading catalog...</p>
-                    </div>
-                }
-            >
+            <Suspense fallback={<Loader />}>
                 <CatalogView />
             </Suspense>
         </div>

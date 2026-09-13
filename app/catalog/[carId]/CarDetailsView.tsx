@@ -7,6 +7,8 @@ import styles from "./page.module.css";
 
 import BookingForm from "@/components/BookingForm/BookingForm";
 import CarInfo from "@/components/CarInfo/CarInfo";
+import Loader from "@/components/Loader/Loader";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
 interface CarDetailsViewProps {
     params: Promise<{ carId: string }>;
@@ -20,17 +22,19 @@ export default function CarDetailsView({ params }: CarDetailsViewProps) {
 
     if (isLoading) {
         return (
-            <div className={styles.loadingState}>
-                <p>Loading car details...</p>
-            </div>
+            <Loader
+                title="Loading car details..."
+                subtitle="Please wait while we load the vehicle specifications"
+            />
         );
     }
 
     if (isError || !car) {
         return (
-            <div className={styles.errorState}>
-                <p>Car not found or failed to load.</p>
-            </div>
+            <ErrorMessage
+                title="Car not found"
+                message="Car not found or failed to load. Please try again later."
+            />
         );
     }
 
