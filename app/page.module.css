@@ -8,7 +8,6 @@
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 60px;
-    background-color: var(--color-white);
     background-image:
         linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
         url("/hero-bg.webp");

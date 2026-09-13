@@ -7,17 +7,17 @@ import { FaHeart } from "react-icons/fa";
 import Button from "@/components/Button/Button";
 import { Car } from "@/types/car";
 import { useFavoritesStore } from "@/store/useFavoritesStore";
+// 👍 Підключаємо стилі модуля
+import styles from "./CarCard.module.css";
 
 interface CarCardProps {
     car: Car;
 }
 
 export default function CarCard({ car }: CarCardProps) {
-    // 👍 Реактивна підписка на наявність ID у списку favorites
     const isFav = useFavoritesStore((state) =>
         state.favorites.includes(String(car.id)),
     );
-    // 👍 Отримуємо функцію окремо
     const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
 
     const city = car.location?.city || "";
@@ -28,17 +28,20 @@ export default function CarCard({ car }: CarCardProps) {
         : "";
 
     return (
-        <article className="card" data-card-id={car.id}>
-            <div className="cardImageWrapper">
+        <article className={styles.card} data-card-id={car.id}>
+            <div className={styles.cardImageWrapper}>
+                {/* 👍 Використовуємо fill замість фіксованих width/height для адаптивного заповнення контейнера */}
                 <Image
-                    className="cardImage"
+                    className={styles.cardImage}
                     src={car.img || "/hero-bg.webp"}
                     alt={`${car.brand} ${car.model}`}
-                    width={244}
-                    height={268}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1440px) 276px, 276px"
                 />
                 <button
-                    className={`favoriteButton ${isFav ? "favoriteButtonActive" : ""}`}
+                    className={`${styles.favoriteButton} ${
+                        isFav ? styles.favoriteButtonActive : ""
+                    }`}
                     type="button"
                     aria-label={
                         isFav ? "Remove from favorites" : "Add to favorites"
@@ -46,34 +49,40 @@ export default function CarCard({ car }: CarCardProps) {
                     onClick={() => toggleFavorite(String(car.id))}
                 >
                     {isFav ? (
-                        <FaHeart className="favoriteIcon" />
+                        <FaHeart className={styles.favoriteIcon} />
                     ) : (
-                        <FiHeart className="favoriteIcon" />
+                        <FiHeart className={styles.favoriteIcon} />
                     )}
                 </button>
             </div>
 
-            <div className="cardDescriptionWrapper">
-                <div className="cardTitleWrapper">
-                    <h3 className="carHeading">
+            <div className={styles.cardDescriptionWrapper}>
+                <div className={styles.cardTitleWrapper}>
+                    <h3 className={styles.carHeading}>
                         {car.brand}{" "}
-                        <span className="carModel">{car.model}</span>,{" "}
+                        <span className={styles.carModel}>{car.model}</span>,{" "}
                         {car.year}
                     </h3>
-                    <span className="carPrice">
+                    <span className={styles.carPrice}>
                         ${car.rentalPrice?.replace(/[^0-9]/g, "")}
                     </span>
                 </div>
 
-                <div className="cardDetailsWrapper">
-                    <ul className="detailsList">
-                        <li className="detailsItem">{city}</li>
-                        <li className="detailsItem">{country}</li>
-                        <li className="detailsItem">{car.rentalCompany}</li>
+                <div className={styles.cardDetailsWrapper}>
+                    <ul className={styles.detailsList}>
+                        <li className={styles.detailsItem}>{city}</li>
+                        <li className={styles.detailsItem}>{country}</li>
+                        <li
+                            className={`${styles.detailsItem} ${styles.companyItem}`}
+                        >
+                            {car.rentalCompany}
+                        </li>
                     </ul>
-                    <ul className="detailsList">
-                        <li className="detailsItem">{car.type}</li>
-                        <li className="detailsItem">{formattedMileage}</li>
+                    <ul className={styles.detailsList}>
+                        <li className={styles.detailsItem}>{car.type}</li>
+                        <li className={styles.detailsItem}>
+                            {formattedMileage}
+                        </li>
                     </ul>
                 </div>
             </div>

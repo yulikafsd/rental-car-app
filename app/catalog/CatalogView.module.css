@@ -1,0 +1,64 @@
+/* Сітка карток: 4 в ряд, горизонтальний геп 32px, вертикальний геп 48px */
+.carsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 32px;
+    row-gap: 48px;
+    margin-bottom: 48px;
+}
+
+.loadMoreWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+/* Стани завантаження, помилки та порожнього списку */
+.loadingWrapper,
+.errorWrapper,
+.emptyStateWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    gap: 16px;
+}
+
+.emptyStateWrapper h3,
+.errorWrapper h3,
+.loadingWrapper h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+.emptyStateWrapper p,
+.errorWrapper p,
+.loadingWrapper p {
+    font-size: 16px;
+    color: var(--color-gray-text);
+    max-width: 480px;
+    margin: 0 0 8px 0;
+}
+
+/* Адаптивність під менші екрани */
+@media (max-width: 1280px) {
+    .carsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .carsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .carsGrid {
+        grid-template-columns: 1fr;
+    }
+}

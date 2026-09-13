@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
+import styles from "./CustomSelect.module.css";
+
 interface Option {
     value: string;
     label: string;
@@ -28,6 +30,8 @@ export default function CustomSelect({
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef<HTMLDivElement>(null);
 
+    const modifierClass = id.replace(/-/g, "_");
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -50,27 +54,36 @@ export default function CustomSelect({
     };
 
     return (
-        <div className="filterGroup" ref={selectRef}>
-            <label className="filterLabel" htmlFor={id}>
+        <div className={styles.filterGroup} ref={selectRef}>
+            <label className={styles.filterLabel} htmlFor={id}>
                 {label}
             </label>
-            <div className="customSelectWrapper">
+            <div className={styles.customSelectWrapper}>
                 <button
                     id={id}
                     type="button"
-                    className="customSelectButton"
+                    className={`${styles.customSelectButton} ${styles[`button_${modifierClass}`] || ""}`}
                     aria-haspopup="listbox"
                     aria-expanded={isOpen}
                     onClick={() => setIsOpen((prev) => !prev)}
                 >
-                    <span>
+                    <span
+                        className={
+                            !selectedOption
+                                ? styles.placeholder
+                                : styles.selectedValue
+                        }
+                    >
                         {selectedOption ? selectedOption.label : placeholder}
                     </span>
                     {isOpen ? <FiChevronUp /> : <FiChevronDown />}
                 </button>
 
                 {isOpen && (
-                    <ul className="customSelectList" role="listbox">
+                    <ul
+                        className={`${styles.customSelectList} ${styles[`list_${modifierClass}`] || ""}`}
+                        role="listbox"
+                    >
                         <li
                             role="option"
                             aria-selected={!value}
@@ -84,7 +97,7 @@ export default function CustomSelect({
                                 key={opt.value}
                                 role="option"
                                 aria-selected={opt.value === value}
-                                className={`customSelectOption ${opt.value === value ? "selected" : ""}`}
+                                className={`${styles.customSelectOption} ${opt.value === value ? styles.selected : ""}`}
                                 onClick={() => handleSelect(opt.value)}
                             >
                                 {opt.label}

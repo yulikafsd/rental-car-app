@@ -1,0 +1,59 @@
+.mileageFieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mileageInputsWrapper {
+    display: flex;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.filterLabel {
+    color: var(--color-gray-text);
+    font-size: 12px;
+    line-height: 1.33;
+
+    &.mileageLabel {
+        margin-bottom: 8px;
+    }
+}
+
+.mileageInputsWrapper .filterInput {
+    width: 160px;
+    padding: 14px 24px;
+    background-color: var(--color-white);
+
+    color: var(--color-dark);
+    font-weight: 500;
+    line-height: 1.25;
+
+    border: none;
+    outline: none;
+}
+
+.mileageInputsWrapper .fromInput {
+    border-right: 1px solid var(--color-border);
+    border-radius: 12px 0 0 12px;
+}
+
+.mileageInputsWrapper .toInput {
+    border-radius: 0 12px 12px 0;
+}
+
+.mileageInputsWrapper .filterInput::-webkit-outer-spin-button,
+.mileageInputsWrapper .filterInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.mileageInputsWrapper .filterInput[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}

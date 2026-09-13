@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "./MileageFilter.module.css";
+
 interface MileageFilterProps {
     fromValue: string;
     toValue: string;
@@ -14,12 +16,14 @@ export default function MileageFilter({
     onChangeTo,
 }: MileageFilterProps) {
     return (
-        <fieldset className="filterGroup mileageFieldset">
-            <legend className="filterLabel">Car mileage / km</legend>
-            <div className="mileageInputsWrapper">
+        <fieldset className={`${styles.filterGroup} ${styles.mileageFieldset}`}>
+            <legend className={`${styles.filterLabel} ${styles.mileageLabel}`}>
+                Car mileage / km
+            </legend>
+            <div className={styles.mileageInputsWrapper}>
                 <input
                     id="mileage-from"
-                    className="filterInput"
+                    className={`${styles.filterInput} ${styles.fromInput}`}
                     type="number"
                     placeholder="From"
                     aria-label="Minimum mileage in kilometers"
@@ -28,7 +32,7 @@ export default function MileageFilter({
                 />
                 <input
                     id="mileage-to"
-                    className="filterInput"
+                    className={`${styles.filterInput} ${styles.toInput}`}
                     type="number"
                     placeholder="To"
                     aria-label="Maximum mileage in kilometers"

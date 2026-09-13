@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Button from "@/components/Button/Button";
 import { CarFilters } from "@/types/car";
-import CustomSelect from "./CustomSelect";
-import MileageFilter from "./MileageFilter";
+import CustomSelect from "./СustomSelect/CustomSelect";
+import MileageFilter from "./MileageFilter/MileageFilter";
+import styles from "./Filters.module.css";
 
 interface FiltersProps {
     brandsList: string[];
@@ -45,7 +46,6 @@ export default function Filters({
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    // 👍 Читаємо значення з URL тільки як initial state
     const [values, setValues] = useState<FormValues>(() => ({
         brand: searchParams.get("brand") || "",
         pricePerHour: searchParams.get("pricePerHour") || "",
@@ -53,8 +53,6 @@ export default function Filters({
         maxMileage: searchParams.get("maxMileage") || "",
         onlyFavorites: searchParams.get("onlyFavorites") === "true",
     }));
-
-    // 👍 Прибрано useEffect із setState — жодних каскадних рендерів і помилок лінтера
 
     const handleChange = <K extends keyof FormValues>(
         key: K,
@@ -91,13 +89,8 @@ export default function Filters({
     };
 
     const handleReset = () => {
-        // 👍 Миттєве скидання внутрішніх полів форми
         setValues(DEFAULT_VALUES);
-
-        // 👍 Очищення адресного рядка
         router.push(pathname, { scroll: false });
-
-        // 👍 Очищення фільтрів каталогу
         onResetFilters();
     };
 
@@ -107,7 +100,7 @@ export default function Filters({
     }));
 
     return (
-        <form className="filtersForm" onSubmit={handleSubmit}>
+        <form className={styles.filtersForm} onSubmit={handleSubmit}>
             <CustomSelect
                 id="brand-select"
                 label="Car brand"
@@ -133,28 +126,33 @@ export default function Filters({
                 onChangeTo={(val) => handleChange("maxMileage", val)}
             />
 
-            <div className="filterGroup checkboxGroup">
-                <label className="checkboxLabel" htmlFor="only-favorites">
+            <div className={`${styles.filterGroup} ${styles.checkboxGroup}`}>
+                <label
+                    className={styles.checkboxLabel}
+                    htmlFor="only-favorites"
+                >
                     <input
                         id="only-favorites"
-                        className="filterCheckbox"
+                        className={styles.filterCheckbox}
                         type="checkbox"
                         checked={values.onlyFavorites}
                         onChange={(e) =>
                             handleChange("onlyFavorites", e.target.checked)
                         }
                     />
-                    Show only favorites
+                    Only
+                    <br />
+                    favorites
                 </label>
             </div>
 
-            <div className="filterActions">
+            <div className={styles.filterActions}>
                 <Button type="submit" variant="primary" size="compact">
                     Search
                 </Button>
                 <button
                     type="button"
-                    className="clearFiltersButton"
+                    className={styles.clearFiltersButton}
                     onClick={handleReset}
                 >
                     Clear filters

@@ -1,0 +1,149 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 276px;
+    background-color: var(--color-white);
+    border-radius: 14px;
+    padding: 16px;
+    overflow: hidden;
+}
+
+.cardImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 268px;
+    margin-bottom: 16px;
+    background-color: var(--color-gray-100);
+}
+
+.cardImage {
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+/* Кнопка сердечка */
+.favoriteButton {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    z-index: 2;
+}
+
+.favoriteIcon {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-white);
+    stroke-width: 3;
+    transition:
+        transform 250ms ease-in-out,
+        fill 250ms ease-in-out;
+}
+
+.favoriteButtonActive .favoriteIcon {
+    stroke: var(--color-light-blue);
+    fill: var(--color-light-blue);
+}
+
+.favoriteButton:hover .favoriteIcon {
+    transform: scale(1.15);
+}
+
+.cardDescriptionWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.cardTitleWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.carHeading {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.carModel {
+    color: var(--color-light-blue);
+}
+
+.carPrice {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-dark);
+    flex-shrink: 0;
+}
+
+.cardDetailsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    padding: 8px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--color-gray-100);
+}
+
+/* 👍 Додано стилізацію списків характеристик */
+.detailsList {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-width: 0;
+}
+
+/* 👍 Стилізація пунктів з border-right замість ::after */
+.detailsItem {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    color: var(--color-dark);
+    display: inline-flex;
+    align-items: center;
+    padding-right: 6px;
+    margin-right: 6px;
+    border-right: 1px solid var(--color-border);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* 👍 Прибираємо лінію в останнього елемента рядка */
+.detailsItem:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+/* 👍 Довга назва компанії скорочується трикрапкою */
+.companyItem {
+    display: block; /* 👍 block коректно обробляє text-overflow */
+    flex-shrink: 1;
+    min-width: 0; /* 👍 критично важливо для увімкнення стиснення в Flexbox */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

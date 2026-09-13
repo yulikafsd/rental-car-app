@@ -9,6 +9,7 @@ import { useCars } from "@/hooks/useCars";
 import { useCarFilters } from "@/hooks/useCarFilters";
 import { useFavoritesStore } from "@/store/useFavoritesStore";
 import { CarFilters } from "@/types/car";
+import styles from "./CatalogView.module.css";
 
 export default function CatalogView() {
     const searchParams = useSearchParams();
@@ -75,20 +76,20 @@ export default function CatalogView() {
                 <div
                     role="status"
                     aria-live="polite"
-                    className="loadingWrapper"
+                    className={styles.loadingWrapper}
                 >
                     <h3>Loading cars...</h3>
                     <p>Please wait while we fetch the best cars for you</p>
                 </div>
             )}
             {isError && (
-                <div role="alert" className="errorWrapper">
+                <div role="alert" className={styles.errorWrapper}>
                     <h3>Error loading cars</h3>
                     <p>Failed to load the car list. Please try again later.</p>
                 </div>
             )}
             {!isLoading && !isError && displayedCars.length === 0 && (
-                <div className="emptyStateWrapper">
+                <div className={styles.emptyStateWrapper}>
                     <h3>No cars found</h3>
                     <p>
                         We couldn’t find any cars that match your current
@@ -105,14 +106,14 @@ export default function CatalogView() {
                 </div>
             )}
             {!isLoading && displayedCars.length > 0 && (
-                <div className="carsGrid">
+                <div className={styles.carsGrid}>
                     {displayedCars.map((car) => (
                         <CarCard key={car.id} car={car} />
                     ))}
                 </div>
             )}
             {!isLoading && hasNextPage && !filters.onlyFavorites && (
-                <div className="loadMoreWrapper">
+                <div className={styles.loadMoreWrapper}>
                     <Button
                         variant="outline"
                         size="compact"
