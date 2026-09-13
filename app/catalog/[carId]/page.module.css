@@ -1,0 +1,45 @@
+.article {
+    max-width: 1200px;
+    margin: 84px auto;
+}
+
+.articleGrid {
+    display: grid;
+    grid-template-columns: 0.548fr 0.452fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 512px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--color-light-gray, #f7f7fb);
+}
+
+.carImage {
+    object-fit: cover;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.loadingState,
+.errorState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 18px;
+    color: var(--color-gray-text, #8a8a89);
+}

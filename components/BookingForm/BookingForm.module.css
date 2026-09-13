@@ -1,0 +1,139 @@
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background-color: var(--color-white);
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--color-gray-text);
+    margin-bottom: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.fieldGroup {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background-color: var(--color-gray-200);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+
+    color: var(--color-dark);
+    outline: none;
+    transition:
+        border-color 250ms ease-in-out,
+        background-color 250ms ease-in-out;
+
+    &:focus-visible {
+        outline: 2px solid var(--color-light-blue);
+        outline-offset: 2px;
+    }
+}
+
+.textarea {
+    min-height: 88px;
+    resize: none;
+}
+
+.fieldLabel {
+    position: absolute;
+    left: 18px;
+    top: 15px;
+    padding: 0 6px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--color-gray-text);
+    background-color: transparent;
+    border-radius: 4px;
+    pointer-events: none;
+    transition:
+        transform 250ms ease-in-out,
+        font-size 250ms ease-in-out,
+        color 250ms ease-in-out,
+        background-color 250ms ease-in-out;
+    transform-origin: left top;
+    z-index: 2;
+}
+
+.input:focus ~ .fieldLabel,
+.input:not(:placeholder-shown) ~ .fieldLabel,
+.textarea:focus ~ .fieldLabel,
+.textarea:not(:placeholder-shown) ~ .fieldLabel {
+    transform: translateY(-23px) scale(0.85);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    color: var(--color-light-blue);
+    background-color: var(--color-white);
+    border-radius: 8px;
+}
+
+.inputError {
+    border-color: #ec383b !important;
+    background-color: #ffdfdf !important;
+}
+
+.fieldLabel.labelError {
+    color: #ec383b !important;
+}
+
+.inputError:focus ~ .fieldLabel,
+.inputError:not(:placeholder-shown) ~ .fieldLabel,
+.inputError ~ .fieldLabel.labelError {
+    transform: translateY(-23px) scale(0.85);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    color: #ec383b !important;
+    background-color: #ffdfdf !important;
+    border-radius: 8px;
+}
+
+.errorIcon {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    color: #ec383b;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.errorText {
+    margin-top: 6px;
+    margin-left: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    color: #ec383b;
+}

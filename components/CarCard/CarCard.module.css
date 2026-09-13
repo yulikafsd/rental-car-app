@@ -128,17 +128,18 @@
     flex-shrink: 0;
 }
 
-.detailsItem:last-child {
+.detailsItem.mileageItem {
     border-right: none;
     padding-right: 0;
     margin-right: 0;
 }
 
-.companyItem {
+.detailsItem.companyItem {
     display: block;
     flex-shrink: 1;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border-right: 1px solid var(--color-border);
 }

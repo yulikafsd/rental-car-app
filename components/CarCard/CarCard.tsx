@@ -79,7 +79,9 @@ export default function CarCard({ car }: CarCardProps) {
                     </ul>
                     <ul className={styles.detailsList}>
                         <li className={styles.detailsItem}>{car.type}</li>
-                        <li className={styles.detailsItem}>
+                        <li
+                            className={`${styles.detailsItem} ${styles.mileageItem}`}
+                        >
                             {formattedMileage}
                         </li>
                     </ul>

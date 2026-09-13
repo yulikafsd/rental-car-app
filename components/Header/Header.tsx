@@ -7,6 +7,7 @@ import styles from "./Header.module.css";
 
 export default function Header() {
     const pathname = usePathname();
+    const isCatalogActive = pathname === "/catalog";
 
     return (
         <header className={styles.header}>
@@ -32,9 +33,7 @@ export default function Header() {
                     <Link
                         href="/catalog"
                         className={`${styles.link} ${
-                            pathname.startsWith("/catalog")
-                                ? styles.activeLink
-                                : ""
+                            isCatalogActive ? styles.activeLink : ""
                         }`}
                     >
                         Catalog

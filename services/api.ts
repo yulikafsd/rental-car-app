@@ -71,9 +71,18 @@ export const sendBookingRequest = async ({
     carId,
     bookingData,
 }: SendBookingParams): Promise<BookingResponse> => {
-    const { data } = await apiClient.post<BookingResponse>(
-        `/cars/${carId}/booking-requests`,
-        bookingData,
-    );
-    return data;
+    const response = await fetch(`/api/cars/${carId}/booking-requests`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+    });
+
+    if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.message || "Failed to submit booking");
+    }
+
+    return response.json();
 };
