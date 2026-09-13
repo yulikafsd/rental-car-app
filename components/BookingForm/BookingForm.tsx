@@ -9,7 +9,6 @@ import styles from "./BookingForm.module.css";
 
 interface BookingFormProps {
     carId: string;
-    carName?: string;
 }
 
 interface FormValues {
@@ -32,7 +31,7 @@ const INITIAL_VALUES: FormValues = {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function BookingForm({ carId, carName }: BookingFormProps) {
+export default function BookingForm({ carId }: BookingFormProps) {
     const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
     const [errors, setErrors] = useState<FormErrors>({});
 
@@ -103,7 +102,6 @@ export default function BookingForm({ carId, carName }: BookingFormProps) {
                     name: values.name.trim(),
                     email: values.email.trim(),
                     comment: values.comment.trim(),
-                    carName,
                 },
             },
             {

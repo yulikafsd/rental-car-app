@@ -50,7 +50,6 @@ export interface BookingRequest {
     name: string;
     email: string;
     comment?: string;
-    carName?: string;
 }
 
 export interface BookingResponse {

@@ -49,10 +49,7 @@ export default function CarDetailsPage({ params }: PageProps) {
                         />
                     </div>
 
-                    <BookingForm
-                        carId={car.id}
-                        carName={`${car.brand} ${car.model}`}
-                    />
+                    <BookingForm carId={car.id} />
                 </div>
 
                 <div className={styles.rightColumn}>
