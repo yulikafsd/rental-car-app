@@ -35,7 +35,11 @@
     line-height: 1.25;
 
     border: none;
-    outline: none;
+}
+
+.mileageInputsWrapper .filterInput:focus-visible {
+    outline: 2px solid var(--color-light-blue);
+    outline-offset: -2px;
 }
 
 .mileageInputsWrapper .fromInput {

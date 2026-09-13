@@ -5,7 +5,6 @@ import Link from "next/link";
 import styles from "./Button.module.css";
 
 export type ButtonVariant = "primary" | "outline";
-/* 👆 Замінено hero на extraLarge */
 export type ButtonSize = "extraLarge" | "large" | "compact" | "full";
 
 interface BaseButtonProps {

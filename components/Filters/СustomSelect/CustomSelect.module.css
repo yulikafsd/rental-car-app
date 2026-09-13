@@ -31,7 +31,11 @@
     line-height: 1.25;
 
     cursor: pointer;
-    outline: none;
+}
+
+.customSelectButton:focus-visible {
+    outline: 2px solid var(--color-light-blue);
+    outline-offset: 2px;
 }
 
 .button_brand_select {

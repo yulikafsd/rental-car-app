@@ -1,4 +1,3 @@
-/* Сітка карток: 4 в ряд, горизонтальний геп 32px, вертикальний геп 48px */
 .carsGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -13,7 +12,6 @@
     margin-bottom: 48px;
 }
 
-/* Стани завантаження, помилки та порожнього списку */
 .loadingWrapper,
 .errorWrapper,
 .emptyStateWrapper {
@@ -44,7 +42,6 @@
     margin: 0 0 8px 0;
 }
 
-/* Адаптивність під менші екрани */
 @media (max-width: 1280px) {
     .carsGrid {
         grid-template-columns: repeat(3, 1fr);

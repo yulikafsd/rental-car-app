@@ -22,7 +22,6 @@
     object-fit: cover;
 }
 
-/* Кнопка сердечка */
 .favoriteButton {
     position: absolute;
     top: 14px;
@@ -104,7 +103,6 @@
     background-color: var(--color-gray-100);
 }
 
-/* 👍 Додано стилізацію списків характеристик */
 .detailsList {
     display: flex;
     flex-wrap: nowrap;
@@ -116,7 +114,6 @@
     min-width: 0;
 }
 
-/* 👍 Стилізація пунктів з border-right замість ::after */
 .detailsItem {
     font-size: 12px;
     font-weight: 400;
@@ -131,18 +128,16 @@
     flex-shrink: 0;
 }
 
-/* 👍 Прибираємо лінію в останнього елемента рядка */
 .detailsItem:last-child {
     border-right: none;
     padding-right: 0;
     margin-right: 0;
 }
 
-/* 👍 Довга назва компанії скорочується трикрапкою */
 .companyItem {
-    display: block; /* 👍 block коректно обробляє text-overflow */
+    display: block;
     flex-shrink: 1;
-    min-width: 0; /* 👍 критично важливо для увімкнення стиснення в Flexbox */
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

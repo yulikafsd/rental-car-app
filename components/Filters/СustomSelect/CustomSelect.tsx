@@ -17,6 +17,7 @@ interface CustomSelectProps {
     value: string;
     options: Option[];
     onChange: (value: string) => void;
+    formatSelectedValue?: (selectedLabel: string) => string;
 }
 
 export default function CustomSelect({
@@ -26,6 +27,7 @@ export default function CustomSelect({
     value,
     options,
     onChange,
+    formatSelectedValue,
 }: CustomSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef<HTMLDivElement>(null);
@@ -53,6 +55,12 @@ export default function CustomSelect({
         setIsOpen(false);
     };
 
+    const displayButtonText = selectedOption
+        ? formatSelectedValue
+            ? formatSelectedValue(selectedOption.label)
+            : selectedOption.label
+        : placeholder;
+
     return (
         <div className={styles.filterGroup} ref={selectRef}>
             <label className={styles.filterLabel} htmlFor={id}>
@@ -74,7 +82,7 @@ export default function CustomSelect({
                                 : styles.selectedValue
                         }
                     >
-                        {selectedOption ? selectedOption.label : placeholder}
+                        {displayButtonText}
                     </span>
                     {isOpen ? <FiChevronUp /> : <FiChevronDown />}
                 </button>
@@ -84,14 +92,6 @@ export default function CustomSelect({
                         className={`${styles.customSelectList} ${styles[`list_${modifierClass}`] || ""}`}
                         role="listbox"
                     >
-                        <li
-                            role="option"
-                            aria-selected={!value}
-                            className="customSelectOption"
-                            onClick={() => handleSelect("")}
-                        >
-                            {placeholder}
-                        </li>
                         {options.map((opt) => (
                             <li
                                 key={opt.value}

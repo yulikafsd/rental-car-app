@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import Button from "@/components/Button/Button";
-import { CarFilters } from "@/types/car";
+
 import CustomSelect from "./СustomSelect/CustomSelect";
 import MileageFilter from "./MileageFilter/MileageFilter";
+import CustomCheckbox from "./CustomCheckbox/CustomCheckbox";
+import Button from "@/components/Button/Button";
+
+import { CarFilters } from "@/types/car";
 import styles from "./Filters.module.css";
 
 interface FiltersProps {
@@ -34,7 +37,7 @@ const NUMERIC_KEYS = new Set(["pricePerHour", "minMileage", "maxMileage"]);
 
 const PRICE_OPTIONS = Array.from({ length: 13 }, (_, i) => ({
     value: String((i + 3) * 10),
-    label: `To $${(i + 3) * 10}`,
+    label: String((i + 3) * 10),
 }));
 
 export default function Filters({
@@ -117,6 +120,7 @@ export default function Filters({
                 value={values.pricePerHour}
                 options={PRICE_OPTIONS}
                 onChange={(val) => handleChange("pricePerHour", val)}
+                formatSelectedValue={(label) => `To $${label}`}
             />
 
             <MileageFilter
@@ -126,25 +130,15 @@ export default function Filters({
                 onChangeTo={(val) => handleChange("maxMileage", val)}
             />
 
-            <div className={`${styles.filterGroup} ${styles.checkboxGroup}`}>
-                <label
-                    className={styles.checkboxLabel}
-                    htmlFor="only-favorites"
-                >
-                    <input
-                        id="only-favorites"
-                        className={styles.filterCheckbox}
-                        type="checkbox"
-                        checked={values.onlyFavorites}
-                        onChange={(e) =>
-                            handleChange("onlyFavorites", e.target.checked)
-                        }
-                    />
-                    Only
-                    <br />
-                    favorites
-                </label>
-            </div>
+            <CustomCheckbox
+                id="only-favorites"
+                checked={values.onlyFavorites}
+                onChange={(checked) => handleChange("onlyFavorites", checked)}
+            >
+                Only
+                <br />
+                favorites
+            </CustomCheckbox>
 
             <div className={styles.filterActions}>
                 <Button type="submit" variant="primary" size="compact">

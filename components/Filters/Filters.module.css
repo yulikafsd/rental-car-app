@@ -10,41 +10,6 @@
     margin-right: auto;
 }
 
-/* CHECKBOX */
-
-.filterGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: relative;
-}
-
-.checkboxGroup {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-self: flex-end;
-    height: 48px;
-    margin-right: 16px;
-}
-
-.checkboxLabel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-dark);
-    cursor: pointer;
-}
-
-.filterCheckbox {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--color-light-blue);
-    cursor: pointer;
-}
-
 /* ACTION BUTTONS */
 
 .filterActions {
@@ -75,4 +40,9 @@
 .clearFiltersButton:hover {
     color: var(--color-dark);
     text-decoration: underline;
+}
+
+.clearFiltersButton:focus-visible {
+    outline: 2px solid var(--color-light-blue);
+    outline-offset: 2px;
 }

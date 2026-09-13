@@ -6,8 +6,8 @@ import { FaHeart } from "react-icons/fa";
 
 import Button from "@/components/Button/Button";
 import { Car } from "@/types/car";
+
 import { useFavoritesStore } from "@/store/useFavoritesStore";
-// 👍 Підключаємо стилі модуля
 import styles from "./CarCard.module.css";
 
 interface CarCardProps {
@@ -30,7 +30,6 @@ export default function CarCard({ car }: CarCardProps) {
     return (
         <article className={styles.card} data-card-id={car.id}>
             <div className={styles.cardImageWrapper}>
-                {/* 👍 Використовуємо fill замість фіксованих width/height для адаптивного заповнення контейнера */}
                 <Image
                     className={styles.cardImage}
                     src={car.img || "/hero-bg.webp"}
