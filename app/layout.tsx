@@ -15,6 +15,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://rental-car-app-yu-za.vercel.app"),
     title: "Rental Car App",
     description: "Find and rent your perfect car easily and quickly.",
     icons: {

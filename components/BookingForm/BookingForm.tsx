@@ -106,13 +106,11 @@ export default function BookingForm({ carId }: BookingFormProps) {
             },
             {
                 onSuccess: (data) => {
-                    // 👍 Показ успішного тосту
                     toast.success(data.message || "Car successfully booked!");
                     setValues(INITIAL_VALUES);
                     setErrors({});
                 },
                 onError: (error) => {
-                    // 👍 Показ тосту з помилкою бекенду
                     toast.error(error.message || "Failed to submit booking.");
                 },
             },
@@ -129,7 +127,6 @@ export default function BookingForm({ carId }: BookingFormProps) {
             <form className={styles.form} onSubmit={handleSubmit} noValidate>
                 {/* Name */}
                 <div className={styles.fieldGroup}>
-                    {/* 👍 input стоїть перед label для роботи селекторів ~, placeholder=" " обов'язковий */}
                     <input
                         id="booking-name"
                         type="text"
@@ -153,7 +150,6 @@ export default function BookingForm({ carId }: BookingFormProps) {
 
                     {errors.name && (
                         <>
-                            {/* 👍 Червона іконка праворуч */}
                             <FiAlertCircle className={styles.errorIcon} />
                             <span className={styles.errorText}>
                                 {errors.name}

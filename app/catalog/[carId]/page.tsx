@@ -1,61 +1,54 @@
-"use client";
-
-import { use } from "react";
-import Image from "next/image";
-import { useCarDetails } from "@/hooks/useCarDetails";
-import styles from "./page.module.css";
-
-import BookingForm from "@/components/BookingForm/BookingForm";
-import CarInfo from "@/components/CarInfo/CarInfo";
+import { Metadata } from "next";
+import { fetchCarById } from "@/services/api";
+import CarDetailsView from "./CarDetailsView";
 
 interface PageProps {
     params: Promise<{ carId: string }>;
 }
 
+export async function generateMetadata({
+    params,
+}: PageProps): Promise<Metadata> {
+    const { carId } = await params;
+
+    try {
+        const car = await fetchCarById(carId);
+
+        const title = `${car.brand} ${car.model} (${car.year}) | Rental Car`;
+        const description =
+            car.description ||
+            `Rent ${car.brand} ${car.model} (${car.year}) for $${car.rentalPrice}/day.`;
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title,
+                description,
+                images: [
+                    {
+                        url:
+                            car.img ||
+                            "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                    },
+                ],
+            },
+        };
+    } catch {
+        return {
+            title: "Car Details | Rental Car",
+            description: "View detailed car specifications and book your ride.",
+            openGraph: {
+                images: [
+                    {
+                        url: "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                    },
+                ],
+            },
+        };
+    }
+}
+
 export default function CarDetailsPage({ params }: PageProps) {
-    const resolvedParams = use(params);
-    const carId = resolvedParams.carId;
-
-    const { data: car, isLoading, isError } = useCarDetails(carId);
-
-    if (isLoading) {
-        return (
-            <div className={styles.loadingState}>
-                <p>Loading car details...</p>
-            </div>
-        );
-    }
-
-    if (isError || !car) {
-        return (
-            <div className={styles.errorState}>
-                <p>Car not found or failed to load.</p>
-            </div>
-        );
-    }
-
-    return (
-        <article className={styles.article}>
-            <div className={styles.articleGrid}>
-                <div className={styles.leftColumn}>
-                    <div className={styles.imageWrapper}>
-                        <Image
-                            src={car.img || "/hero-bg.webp"}
-                            alt={`${car.brand} ${car.model}`}
-                            fill
-                            priority
-                            sizes="(max-width: 1200px) 100vw, 560px"
-                            className={styles.carImage}
-                        />
-                    </div>
-
-                    <BookingForm carId={car.id} />
-                </div>
-
-                <div className={styles.rightColumn}>
-                    <CarInfo car={car} />
-                </div>
-            </div>
-        </article>
-    );
+    return <CarDetailsView params={params} />;
 }
