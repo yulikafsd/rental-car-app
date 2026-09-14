@@ -80,15 +80,15 @@ The application was audited using Google Lighthouse, demonstrating high optimiza
 
 | Metric             |  Score  | Target Met                                                                |
 | :----------------- | :-----: | :------------------------------------------------------------------------ |
-| **Performance**    | **100** | Zero layout shifts (CLS), optimized Next.js images, stable layout heights |
+| **Performance**    | **99**  | Zero layout shifts (CLS), optimized Next.js images, stable layout heights |
 | **Accessibility**  | **96**  | WCAG 2.2 compliant, keyboard navigability, semantic ARIA roles            |
 | **Best Practices** | **100** | Secure headers, modern web standards, error-free console execution        |
 | **SEO**            | **100** | Dynamic Open Graph cards, descriptive meta tags, robots configuration     |
 
 ## Lighthouse Audit Scores:
 
-- [Home Page](./public/lighthouse_home.png?raw=true)
-- [Catalog Page](./public/lighthouse_catalog.png?raw=true)
+- [Home Page](https://raw.githubusercontent.com/yulikafsd/rental-car-app/main/public/lighthouse_home.png)
+- [Catalog Page](https://raw.githubusercontent.com/yulikafsd/rental-car-app/main/public/lighthouse_catalog.png)
 
 ---
 
