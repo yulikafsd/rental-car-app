@@ -51,6 +51,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
     return (
         <html lang="en">
+            <head>
+                <link rel="preconnect" href="https://ac.goit.global" />
+                <link rel="dns-prefetch" href="https://ac.goit.global" />
+            </head>
             <body className={manrope.variable} suppressHydrationWarning>
                 <QueryProvider>
                     <Header />

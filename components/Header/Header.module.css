@@ -22,6 +22,11 @@
     padding-bottom: 16px;
 }
 
+.logoImg {
+    width: 104px;
+    height: 16px;
+}
+
 /* Navigation links row */
 .nav {
     display: flex;

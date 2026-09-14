@@ -49,6 +49,7 @@ export default function Button(props: ButtonProps) {
         size = "compact",
         className = "",
         disabled = false,
+        "aria-label": ariaLabel,
         ...restProps
     } = props;
 
@@ -72,6 +73,7 @@ export default function Button(props: ButtonProps) {
             <Link
                 href={disabled ? "#" : props.href}
                 className={combinedClassName}
+                aria-label={ariaLabel}
                 aria-disabled={disabled ? "true" : undefined}
                 tabIndex={disabled ? -1 : undefined}
                 onClick={(e) => {
@@ -90,7 +92,12 @@ export default function Button(props: ButtonProps) {
                 }}
                 {...linkProps}
             >
-                {children}
+                <span aria-hidden={ariaLabel ? "true" : undefined}>
+                    {children}
+                </span>
+                {ariaLabel && (
+                    <span className="visually-hidden">{ariaLabel}</span>
+                )}
             </Link>
         );
     }
@@ -103,6 +110,7 @@ export default function Button(props: ButtonProps) {
             className={combinedClassName}
             disabled={disabled}
             aria-disabled={disabled ? "true" : undefined}
+            aria-label={ariaLabel}
             {...buttonProps}
         >
             {children}

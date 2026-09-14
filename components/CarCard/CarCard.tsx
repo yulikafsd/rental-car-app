@@ -11,10 +11,11 @@ import styles from "./CarCard.module.css";
 
 interface CarCardProps {
     car: Car;
+    priority?: boolean;
 }
 
 /* Vehicle catalog card displaying imagery, metadata specifications, and booking CTA */
-export default function CarCard({ car }: CarCardProps) {
+export default function CarCard({ car, priority = false }: CarCardProps) {
     /* Favorites store integration for persistent state handling */
     const isFav = useFavoritesStore((state) =>
         state.favorites.includes(String(car.id)),
@@ -53,7 +54,8 @@ export default function CarCard({ car }: CarCardProps) {
                     src={car.img || "/hero-bg.webp"}
                     alt={`${car.brand} ${car.model}`}
                     fill
-                    sizes="(max-width: 320px) 100vw, 244px"
+                    sizes="(max-width: 768px) 360px, 244px"
+                    priority={priority}
                 />
 
                 {/* Accessible toggle button for favorites */}

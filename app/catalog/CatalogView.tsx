@@ -127,9 +127,9 @@ export default function CatalogView() {
                         className={styles.carsGrid}
                         aria-label="Available cars catalog"
                     >
-                        {displayedCars.map((car) => (
+                        {displayedCars.map((car, idx) => (
                             <li key={car.id} className={styles.carGridItem}>
-                                <CarCard car={car} />
+                                <CarCard car={car} priority={idx < 5} />
                             </li>
                         ))}
                     </ul>

@@ -21,6 +21,7 @@ export default function Header() {
                     aria-label="RentalCar homepage"
                 >
                     <Image
+                        className={styles.logoImg}
                         src="/logo.svg"
                         alt="RentalCar Logo"
                         width={104}

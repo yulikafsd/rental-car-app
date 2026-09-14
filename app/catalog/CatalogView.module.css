@@ -1,7 +1,7 @@
 /* Content boundary holding results grid and async states */
 .contentContainer {
     position: relative;
-    min-height: 480px;
+    min-height: 100vh;
     width: 100%;
 }
 
