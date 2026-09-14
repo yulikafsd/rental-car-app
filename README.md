@@ -58,6 +58,7 @@ A responsive, production-ready car rental application built with **Next.js (App 
 - **SEO & Dynamic Metadata:**
     - Route-level metadata coverage using Next.js root `metadataBase` and title templates (`%s | Rental Car App`).
     - Dynamic `generateMetadata` implementation on `/catalog/[carId]` generating vehicle-specific titles, descriptions, and Open Graph cards.
+    - Polymorphic Button Component: Fully reusable, type-safe button supporting multiple visual variants (`primary`, `outline`) and size presets (`extraLarge`, `large`, `full`, `compact`), dynamically rendering as either a native `<button>` or a Next.js `<Link>` based on navigation props while maintaining unified focus states and accessibility standards.
 
 ---
 
