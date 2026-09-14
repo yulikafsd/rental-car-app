@@ -11,6 +11,18 @@ A responsive, production-ready car rental application built with **Next.js (App 
 
 ---
 
+## ✅ Test Assignment Criteria Checklist
+
+- [x] Next.js 15+ App Router & TypeScript
+- [x] TanStack Query with `useInfiniteQuery` (Load More pagination)
+- [x] Backend-side vehicle filtering
+- [x] Car details route opening in a new tab (`/catalog/[carId]`)
+- [x] Functional booking form with API integration & toast alerts
+- [x] Desktop layout matching Figma design specifications
+- [x] Custom accessible UI controls (Select, Checkbox)
+
+---
+
 ## 🛠️ Tech Stack & Tools
 
 - **Next.js (App Router)** — React framework handling hybrid Server/Client components, dynamic routing, metadata generation, and image optimization.
@@ -62,6 +74,24 @@ A responsive, production-ready car rental application built with **Next.js (App 
 
 ---
 
+## 📊 Quality & Performance Audit
+
+The application was audited using Google Lighthouse, demonstrating high optimization standards, semantic markup, and full accessibility compliance:
+
+| Metric             |  Score  | Target Met                                                                |
+| :----------------- | :-----: | :------------------------------------------------------------------------ |
+| **Performance**    | **100** | Zero layout shifts (CLS), optimized Next.js images, stable layout heights |
+| **Accessibility**  | **96**  | WCAG 2.2 compliant, keyboard navigability, semantic ARIA roles            |
+| **Best Practices** | **100** | Secure headers, modern web standards, error-free console execution        |
+| **SEO**            | **100** | Dynamic Open Graph cards, descriptive meta tags, robots configuration     |
+
+## Lighthouse Audit Scores:
+
+- [Home Page](./public/lighthouse_home.png?raw=true)
+- [Catalog Page](./public/lighthouse_catalog.png?raw=true)
+
+---
+
 ## 📂 Project Structure
 
 ```text
@@ -107,6 +137,18 @@ rental-car-app/
 └── types/
     └── car.ts                           # Domain models, filter types, and API schemas
 ```
+
+---
+
+## 🔗 Backend API Integration
+
+- **Base URL:** `https://car-rental-api.goit.global`
+- **Endpoints:**
+    - `GET /cars` — Paginated list of vehicles with query filtering (`brand`, `pricePerHour`, `minMileage`, `maxMileage`, `page`, `limit`).
+    - `GET /cars/:id` — Single vehicle specification.
+    - `GET /brands` — List of available automotive brands for dynamic filter options.
+
+---
 
 ## 💻 Getting Started Locally
 
