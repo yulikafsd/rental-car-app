@@ -1,3 +1,4 @@
+/* Base interactive button styles */
 .button {
     display: inline-flex;
     align-items: center;
@@ -11,6 +12,7 @@
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
+    box-sizing: border-box; /* Ensure consistent sizing when width and paddings are applied */
     transition:
         background-color 250ms ease-in-out,
         border-color 250ms ease-in-out,
@@ -19,22 +21,25 @@
         transform 100ms ease-in-out;
 }
 
+/* Keyboard navigation accessibility outline */
 .button:focus-visible {
     outline: 2px solid var(--color-light-blue);
     outline-offset: 2px;
 }
 
+/* Disabled state handling */
 .button:disabled,
 .disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    pointer-events: none;
 }
 
+/* Click tactile feedback */
 .button:active:not(:disabled):not(.disabled) {
     transform: scale(0.98);
 }
 
+/* Primary color palette */
 .primary {
     background-color: var(--color-light-blue);
     color: var(--color-white);
@@ -46,6 +51,7 @@
     color: var(--color-white);
 }
 
+/* Transparent outline button styles */
 .outline {
     background-color: transparent;
     border-color: var(--color-light-blue);
@@ -58,6 +64,7 @@
     color: var(--color-dark);
 }
 
+/* Standardized button dimension variants */
 .sizeExtraLarge {
     width: 276px;
     padding: 12px 0;

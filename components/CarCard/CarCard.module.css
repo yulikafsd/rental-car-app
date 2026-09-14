@@ -1,3 +1,4 @@
+/* Card container layout */
 .card {
     display: flex;
     flex-direction: column;
@@ -9,19 +10,24 @@
     overflow: hidden;
 }
 
+/* Image preview container */
 .cardImageWrapper {
     position: relative;
     width: 100%;
     height: 268px;
     margin-bottom: 16px;
     background-color: var(--color-gray-100);
+    border-radius: 14px;
+    overflow: hidden;
 }
 
+/* Rounded vehicle thumbnail */
 .cardImage {
     border-radius: 14px;
     object-fit: cover;
 }
 
+/* Favorite action button overlaid on image */
 .favoriteButton {
     position: absolute;
     top: 14px;
@@ -37,6 +43,14 @@
     z-index: 2;
 }
 
+/* Accessible keyboard navigation indicator */
+.favoriteButton:focus-visible {
+    outline: 2px solid var(--color-light-blue);
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+/* Unfilled heart icon */
 .favoriteIcon {
     width: 20px;
     height: 20px;
@@ -47,15 +61,18 @@
         fill 250ms ease-in-out;
 }
 
+/* Active saved state icon */
 .favoriteButtonActive .favoriteIcon {
     stroke: var(--color-light-blue);
     fill: var(--color-light-blue);
 }
 
+/* Interactive hover feedback */
 .favoriteButton:hover .favoriteIcon {
     transform: scale(1.15);
 }
 
+/* Content block wrapping title and tags */
 .cardDescriptionWrapper {
     display: flex;
     flex-direction: column;
@@ -63,6 +80,7 @@
     margin-bottom: 24px;
 }
 
+/* Header row with vehicle title and price */
 .cardTitleWrapper {
     display: flex;
     justify-content: space-between;
@@ -70,6 +88,7 @@
     gap: 8px;
 }
 
+/* Vehicle name, model and year heading */
 .carHeading {
     font-size: 16px;
     font-weight: 500;
@@ -80,10 +99,12 @@
     text-overflow: ellipsis;
 }
 
+/* Highlighted vehicle model name */
 .carModel {
     color: var(--color-light-blue);
 }
 
+/* Formatted daily rental price */
 .carPrice {
     font-size: 16px;
     font-weight: 500;
@@ -92,6 +113,7 @@
     flex-shrink: 0;
 }
 
+/* Container wrapping both rows of specifications */
 .cardDetailsWrapper {
     display: flex;
     flex-direction: column;
@@ -103,6 +125,7 @@
     background-color: var(--color-gray-100);
 }
 
+/* Single line specifications row without wrapping */
 .detailsList {
     display: flex;
     flex-wrap: nowrap;
@@ -114,6 +137,7 @@
     min-width: 0;
 }
 
+/* Individual tag item with right divider by default */
 .detailsItem {
     font-size: 12px;
     font-weight: 400;
@@ -128,12 +152,7 @@
     flex-shrink: 0;
 }
 
-.detailsItem.mileageItem {
-    border-right: none;
-    padding-right: 0;
-    margin-right: 0;
-}
-
+/* Company item truncates with ellipsis if too long while preserving right border */
 .detailsItem.companyItem {
     display: block;
     flex-shrink: 1;
@@ -142,4 +161,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     border-right: 1px solid var(--color-border);
+}
+
+/* Mileage item in the second row removes the right divider */
+.detailsItem.mileageItem {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
 }

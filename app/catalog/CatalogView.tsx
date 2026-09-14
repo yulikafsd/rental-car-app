@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Filters from "@/components/Filters/Filters";
@@ -16,13 +16,19 @@ import { useFavoritesStore } from "@/store/useFavoritesStore";
 import { CarFilters } from "@/types/car";
 import styles from "./CatalogView.module.css";
 
+/* Main catalog interactive view managing URL filters, infinite query state, and grid rendering */
 export default function CatalogView() {
+    /* Scroll to top when catalog mounts */
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const router = useRouter();
     const pathname = usePathname();
-
     const searchParams = useSearchParams();
     const { favorites } = useFavoritesStore();
 
+    /* Initialize filter state parsing query parameters */
     const [filters, setFilters] = useState<CarFilters>(() => ({
         brand: searchParams.get("brand") || undefined,
         pricePerHour: searchParams.get("pricePerHour")
@@ -38,9 +44,11 @@ export default function CatalogView() {
             searchParams.get("onlyFavorites") === "true" || undefined,
     }));
 
+    /* Fetch available brands for filter dropdown */
     const { data: filtersData } = useCarFilters();
     const brandsList = filtersData?.brands || [];
 
+    /* Infinite query hook for paginated car retrieval */
     const {
         data,
         isLoading,
@@ -52,10 +60,12 @@ export default function CatalogView() {
         refetch,
     } = useCars({ filters });
 
+    /* Flatten paginated response into a single car collection */
     const allCars = useMemo(() => {
         return data?.pages.flatMap((page) => page.cars) || [];
     }, [data]);
 
+    /* Filter cars locally when favorites toggle is active */
     const displayedCars = useMemo(() => {
         if (!filters.onlyFavorites) return allCars;
 
@@ -63,15 +73,18 @@ export default function CatalogView() {
         return allCars.filter((car) => favoriteSet.has(String(car.id)));
     }, [allCars, filters.onlyFavorites, favorites]);
 
+    /* Apply updated filters and trigger query refetch */
     const handleApplyFilters = (newFilters: CarFilters) => {
         setFilters(newFilters);
     };
 
+    /* Reset query parameters in URL and clear local filter state */
     const handleResetFilters = () => {
         router.push(pathname, { scroll: false });
         setFilters({});
     };
 
+    /* Central loading indicator flag */
     const showListLoader = isLoading || (isFetching && !isFetchingNextPage);
 
     return (
@@ -80,6 +93,7 @@ export default function CatalogView() {
                 Available Cars
             </h2>
 
+            {/* Filter panel bar */}
             <Filters
                 key={searchParams.toString()}
                 brandsList={brandsList}
@@ -88,7 +102,11 @@ export default function CatalogView() {
                 isLoading={showListLoader}
             />
 
-            <div className={styles.contentWrapper}>
+            <div
+                className={styles.contentContainer}
+                aria-busy={showListLoader}
+                aria-live="polite"
+            >
                 {showListLoader && <Loader />}
 
                 {isError && (
@@ -103,14 +121,21 @@ export default function CatalogView() {
                     <NoResults onReset={handleResetFilters} />
                 )}
 
+                {/* Semantic list of cars */}
                 {displayedCars.length > 0 && (
-                    <div className={styles.carsGrid}>
+                    <ul
+                        className={styles.carsGrid}
+                        aria-label="Available cars catalog"
+                    >
                         {displayedCars.map((car) => (
-                            <CarCard key={car.id} car={car} />
+                            <li key={car.id} className={styles.carGridItem}>
+                                <CarCard car={car} />
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                 )}
 
+                {/* Pagination load more trigger */}
                 {!isLoading && hasNextPage && !filters.onlyFavorites && (
                     <div className={styles.loadMoreWrapper}>
                         <Button
@@ -118,6 +143,7 @@ export default function CatalogView() {
                             size="compact"
                             onClick={() => fetchNextPage()}
                             disabled={isFetchingNextPage || showListLoader}
+                            aria-label="Load more rental cars"
                         >
                             {isFetchingNextPage ? "Loading..." : "Load more"}
                         </Button>

@@ -1,3 +1,4 @@
+/* Central container for empty state search results */
 .container {
     display: flex;
     flex-direction: column;
@@ -8,6 +9,7 @@
     width: 100%;
 }
 
+/* Constrained aspect wrapper for responsive empty illustration */
 .imageWrapper {
     position: relative;
     width: 414px;
@@ -15,10 +17,12 @@
     margin-bottom: 40px;
 }
 
+/* Preserve illustration aspect ratio inside container */
 .image {
     object-fit: contain;
 }
 
+/* Heading indicating no matches found */
 .title {
     font-size: 24px;
     font-weight: 600;
@@ -27,6 +31,7 @@
     margin-bottom: 16px;
 }
 
+/* Context explanation text recommending filter reset */
 .description {
     font-size: 16px;
     font-weight: 500;

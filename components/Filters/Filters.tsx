@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, SubmitEvent } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import CustomSelect from "./СustomSelect/CustomSelect";
@@ -26,6 +26,7 @@ interface FormValues {
     onlyFavorites: boolean;
 }
 
+/* Default filter state values */
 const DEFAULT_VALUES: FormValues = {
     brand: "",
     pricePerHour: "",
@@ -34,13 +35,16 @@ const DEFAULT_VALUES: FormValues = {
     onlyFavorites: false,
 };
 
+/* Keys requiring numeric conversion before emitting to parent handler */
 const NUMERIC_KEYS = new Set(["pricePerHour", "minMileage", "maxMileage"]);
 
+/* Generated hourly price options range ($30 - $150) */
 const PRICE_OPTIONS = Array.from({ length: 13 }, (_, i) => ({
     value: String((i + 3) * 10),
     label: String((i + 3) * 10),
 }));
 
+/* Search filter controls bar managing brand selection, price limits, mileage ranges and favorites */
 export default function Filters({
     brandsList,
     onApplyFilters,
@@ -51,6 +55,7 @@ export default function Filters({
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    /* Local form state synchronized with initial URL query parameters */
     const [values, setValues] = useState<FormValues>(() => ({
         brand: searchParams.get("brand") || "",
         pricePerHour: searchParams.get("pricePerHour") || "",
@@ -59,6 +64,7 @@ export default function Filters({
         onlyFavorites: searchParams.get("onlyFavorites") === "true",
     }));
 
+    /* Generic handler for single input field updates */
     const handleChange = <K extends keyof FormValues>(
         key: K,
         value: FormValues[K],
@@ -66,7 +72,8 @@ export default function Filters({
         setValues((prev) => ({ ...prev, [key]: value }));
     };
 
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    /* Form submission handler persisting query string and executing filter callback */
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const params = new URLSearchParams();
@@ -79,6 +86,7 @@ export default function Filters({
             scroll: false,
         });
 
+        /* Parse non-empty values and convert numerical fields */
         const parsedFilters = Object.entries(values).reduce<CarFilters>(
             (acc, [key, val]) => {
                 if (!val) return acc;
@@ -93,19 +101,27 @@ export default function Filters({
         onApplyFilters(parsedFilters);
     };
 
+    /* Reset form state and clear URL query parameters */
     const handleReset = () => {
         setValues(DEFAULT_VALUES);
         router.push(pathname, { scroll: false });
         onResetFilters();
     };
 
-    const formattedBrands = brandsList.map((b) => ({
-        value: b,
-        label: b,
-    }));
+    /* Memoized brand select options */
+    const formattedBrands = useMemo(
+        () => brandsList.map((b) => ({ value: b, label: b })),
+        [brandsList],
+    );
 
     return (
-        <form className={styles.filtersForm} onSubmit={handleSubmit}>
+        /* Filters form */
+        <form
+            className={styles.filtersForm}
+            onSubmit={handleSubmit}
+            aria-label="Car catalog search filters"
+        >
+            {/* Brand selection dropdown */}
             <CustomSelect
                 id="brand-select"
                 label="Car brand"
@@ -115,6 +131,7 @@ export default function Filters({
                 onChange={(val) => handleChange("brand", val)}
             />
 
+            {/* Hourly rate selection dropdown */}
             <CustomSelect
                 id="price-select"
                 label="Price/ 1 hour"
@@ -125,6 +142,7 @@ export default function Filters({
                 formatSelectedValue={(label) => `To $${label}`}
             />
 
+            {/* Mileage range double input */}
             <MileageFilter
                 fromValue={values.minMileage}
                 toValue={values.maxMileage}
@@ -132,6 +150,7 @@ export default function Filters({
                 onChangeTo={(val) => handleChange("maxMileage", val)}
             />
 
+            {/* Saved favorites toggle checkbox */}
             <CustomCheckbox
                 id="only-favorites"
                 checked={values.onlyFavorites}
@@ -142,20 +161,26 @@ export default function Filters({
                 favorites
             </CustomCheckbox>
 
+            {/* Action triggers group */}
             <div className={styles.filterActions}>
+                {/* Submit button */}
                 <Button
                     type="submit"
                     variant="primary"
                     size="compact"
                     disabled={isLoading}
+                    aria-label="Search available cars"
                 >
                     Search
                 </Button>
+
+                {/* Clear filters button */}
                 <button
                     type="button"
                     className={styles.clearFiltersButton}
                     onClick={handleReset}
                     disabled={isLoading}
+                    aria-label="Reset all search filters"
                 >
                     Clear filters
                 </button>

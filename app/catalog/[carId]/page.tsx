@@ -6,6 +6,7 @@ interface PageProps {
     params: Promise<{ carId: string }>;
 }
 
+/* Dynamic metadata generation resolving vehicle details from API */
 export async function generateMetadata({
     params,
 }: PageProps): Promise<Metadata> {
@@ -14,7 +15,7 @@ export async function generateMetadata({
     try {
         const car = await fetchCarById(carId);
 
-        const title = `${car.brand} ${car.model} (${car.year}) | Rental Car`;
+        const title = `${car.brand} ${car.model} (${car.year})`;
         const description =
             car.description ||
             `Rent ${car.brand} ${car.model} (${car.year}) for $${car.rentalPrice}/day.`;
@@ -27,21 +28,25 @@ export async function generateMetadata({
                 description,
                 images: [
                     {
-                        url:
-                            car.img ||
-                            "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                        url: car.img || "/hero-bg.webp",
+                        width: 1200,
+                        height: 630,
+                        alt: `${car.brand} ${car.model}`,
                     },
                 ],
             },
         };
     } catch {
         return {
-            title: "Car Details | Rental Car",
+            title: "Car Details",
             description: "View detailed car specifications and book your ride.",
             openGraph: {
                 images: [
                     {
-                        url: "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                        url: "/hero-bg.webp",
+                        width: 1200,
+                        height: 630,
+                        alt: "Rental Car Details",
                     },
                 ],
             },
@@ -49,6 +54,9 @@ export async function generateMetadata({
     }
 }
 
-export default function CarDetailsPage({ params }: PageProps) {
-    return <CarDetailsView params={params} />;
+/* Vehicle detail route entry point passing resolved parameter to client presentation */
+export default async function CarDetailsPage({ params }: PageProps) {
+    const { carId } = await params;
+
+    return <CarDetailsView carId={carId} />;
 }

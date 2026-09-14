@@ -1,9 +1,11 @@
+/* Content boundary holding results grid and async states */
 .contentContainer {
     position: relative;
     min-height: 480px;
     width: 100%;
 }
 
+/* Responsive catalog grid layout */
 .carsGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -12,42 +14,20 @@
     margin-bottom: 48px;
 }
 
+/* Individual grid item centering */
+.carGridItem {
+    display: flex;
+    justify-content: center;
+}
+
+/* Pagination load more button wrapper */
 .loadMoreWrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 48px;
 }
 
-.loadingWrapper,
-.errorWrapper,
-.emptyStateWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 20px;
-    gap: 16px;
-}
-
-.emptyStateWrapper h3,
-.errorWrapper h3,
-.loadingWrapper h3 {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--color-dark);
-    margin: 0;
-}
-
-.emptyStateWrapper p,
-.errorWrapper p,
-.loadingWrapper p {
-    font-size: 16px;
-    color: var(--color-gray-text);
-    max-width: 480px;
-    margin: 0 0 8px 0;
-}
-
+/* Responsive grid layout queries */
 @media (max-width: 1280px) {
     .carsGrid {
         grid-template-columns: repeat(3, 1fr);

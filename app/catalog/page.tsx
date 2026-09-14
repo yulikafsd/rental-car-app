@@ -5,17 +5,17 @@ import CatalogView from "./CatalogView";
 import Loader from "@/components/Loader/Loader";
 
 export const metadata: Metadata = {
-    title: "Car Catalog | RentalCar",
+    title: "Car Catalog",
     description:
         "Browse and rent reliable cars at the best prices with RentalCar.",
     openGraph: {
-        title: "Car Catalog | RentalCar",
+        title: "Car Catalog",
         description:
             "Browse and rent reliable cars at the best prices with RentalCar.",
-        url: "https://rental-car-app-yu-za.vercel.app/catalog",
+        url: "/catalog",
         images: [
             {
-                url: "https://rental-car-app-yu-za.vercel.app/hero-bg.webp",
+                url: "/hero-bg.webp",
                 width: 1440,
                 height: 700,
                 alt: "Rental Car Catalog Preview",
@@ -25,13 +25,16 @@ export const metadata: Metadata = {
     },
 };
 
+/* Catalog page boundary rendering hidden accessibility heading and view container */
 export default function CatalogPage() {
     return (
-        <div className="container">
-            <h1 className="visually-hidden">Car Rental Catalog</h1>
+        <section className="container" aria-labelledby="catalog-page-title">
+            <h1 id="catalog-page-title" className="visually-hidden">
+                Car Rental Catalog
+            </h1>
             <Suspense fallback={<Loader />}>
                 <CatalogView />
             </Suspense>
-        </div>
+        </section>
     );
 }

@@ -1,3 +1,4 @@
+/* Main site header container pinned above content layer */
 .header {
     position: relative;
     z-index: 50;
@@ -6,12 +7,14 @@
     background-color: var(--color-white);
 }
 
+/* Flex container aligning logo and navigation horizontally */
 .headerContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+/* Brand logo link container */
 .logoLink {
     display: inline-flex;
     align-items: center;
@@ -19,27 +22,45 @@
     padding-bottom: 16px;
 }
 
+/* Navigation links row */
 .nav {
     display: flex;
     align-items: center;
     gap: 32px;
 }
 
+.navList {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+/* Standard navigation link style */
 .link {
-    padding-top: 16px;
-    padding-bottom: 16px;
     font-size: 16px;
     font-weight: 500;
     line-height: 1.25;
     color: var(--color-dark);
-    text-decoration: none;
-    transition: color 250ms ease-in-out;
+    border-radius: 6px;
+    outline: 2px solid transparent;
+    outline-offset: 4px;
+    transition:
+        color 250ms ease-in-out,
+        outline-color 250ms ease-in-out;
 }
 
+/* Link hover feedback */
 .link:hover {
     color: var(--color-light-blue);
 }
 
+/* Keyboard navigation accessibility outline */
+.link:focus-visible,
+.logoLink:focus-visible {
+    outline-color: var(--color-light-blue);
+}
+
+/* Highlighted active page indicator matching design mockup directly */
 .activeLink {
     color: var(--color-light-blue);
     text-decoration: underline;

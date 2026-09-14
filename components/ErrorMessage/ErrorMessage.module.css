@@ -1,3 +1,4 @@
+/* Centered container for displaying query and runtime errors */
 .container {
     display: flex;
     flex-direction: column;
@@ -8,6 +9,7 @@
     width: 100%;
 }
 
+/* Error state main heading */
 .title {
     font-size: 24px;
     font-weight: 600;
@@ -16,6 +18,7 @@
     margin-bottom: 12px;
 }
 
+/* Descriptive explanation text constrained for optimal line length readability */
 .description {
     font-size: 16px;
     font-weight: 400;

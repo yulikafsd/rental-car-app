@@ -1,13 +1,4 @@
-.mileageFieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mileageInputsWrapper {
-    display: flex;
-}
-
+/* Container fieldset resetting native browser borders and establishing flex stack */
 .filterGroup {
     display: flex;
     flex-direction: column;
@@ -15,49 +6,58 @@
     position: relative;
 }
 
+/* Accessible category legend label */
 .filterLabel {
     color: var(--color-gray-text);
     font-size: 12px;
     line-height: 1.33;
-
-    &.mileageLabel {
-        margin-bottom: 8px;
-    }
 }
 
-.mileageInputsWrapper .filterInput {
+/* Horizontal input pair container */
+.mileageInputsWrapper {
+    display: flex;
+}
+
+/* Base input field styling */
+.filterInput {
     width: 160px;
     padding: 14px 24px;
     background-color: var(--color-white);
-
     color: var(--color-dark);
     font-weight: 500;
     line-height: 1.25;
-
     border: none;
-}
-
-.mileageInputsWrapper .filterInput:focus-visible {
-    outline: 2px solid var(--color-light-blue);
+    outline: 2px solid transparent;
     outline-offset: -2px;
+    transition: outline-color 250ms ease-in-out;
 }
 
-.mileageInputsWrapper .fromInput {
+/* Accessible focus ring elevated above adjacent input border */
+.filterInput:focus-visible {
+    outline-color: var(--color-light-blue);
+    z-index: 1;
+}
+
+/* Left input with right divider and rounded left border */
+.fromInput {
     border-right: 1px solid var(--color-border);
     border-radius: 12px 0 0 12px;
 }
 
-.mileageInputsWrapper .toInput {
+/* Right input with rounded right border */
+.toInput {
     border-radius: 0 12px 12px 0;
 }
 
-.mileageInputsWrapper .filterInput::-webkit-outer-spin-button,
-.mileageInputsWrapper .filterInput::-webkit-inner-spin-button {
+/* Remove spin buttons in WebKit browsers */
+.filterInput::-webkit-outer-spin-button,
+.filterInput::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.mileageInputsWrapper .filterInput[type="number"] {
+/* Remove spin buttons in Firefox and standard modern engines */
+.filterInput[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }

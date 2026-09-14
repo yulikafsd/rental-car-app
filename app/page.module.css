@@ -1,3 +1,4 @@
+/* Hero section container with background image */
 .hero {
     width: 100%;
     max-width: 1440px;
@@ -8,6 +9,8 @@
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-image:
         linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
         url("/hero-bg.webp");
@@ -17,6 +20,7 @@
     text-align: center;
 }
 
+/* High-resolution retina display background override */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .hero {
         background-image:
@@ -29,6 +33,7 @@
     }
 }
 
+/* Constrained content container centered inside hero */
 .contentWrap {
     max-width: 800px;
     display: flex;
@@ -36,6 +41,7 @@
     align-items: center;
 }
 
+/* Hero primary title */
 .title {
     margin-bottom: 16px;
     font-size: 60px;
@@ -44,6 +50,7 @@
     color: var(--color-white);
 }
 
+/* Hero supportive description text */
 .description {
     margin-bottom: 40px;
     font-size: 24px;

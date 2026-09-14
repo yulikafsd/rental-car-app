@@ -1,12 +1,19 @@
+/* Card container layout */
 .card {
     display: flex;
     flex-direction: column;
     padding: 32px 24px;
-    border: 1px solid transparent;
     border-radius: 16px;
     background-color: var(--color-white);
 }
 
+/* Header container wrapping primary details */
+.headerBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top line with title and catalog reference article */
 .titleRow {
     display: flex;
     align-items: baseline;
@@ -14,6 +21,7 @@
     margin-bottom: 8px;
 }
 
+/* Primary vehicle heading */
 .title {
     font-size: 24px;
     font-weight: 600;
@@ -21,6 +29,7 @@
     color: var(--color-dark);
 }
 
+/* Catalog inventory article reference */
 .carArticle {
     font-size: 16px;
     font-weight: 500;
@@ -28,10 +37,11 @@
     color: var(--color-gray-text);
 }
 
+/* Location indicator row */
 .locationRow {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     font-size: 16px;
     font-weight: 500;
     line-height: 1.25;
@@ -39,6 +49,12 @@
     margin-bottom: 16px;
 }
 
+/* Location pin icon flex fix */
+.locationIcon {
+    flex-shrink: 0;
+}
+
+/* Rental rate pricing banner */
 .price {
     font-size: 24px;
     font-weight: 600;
@@ -47,6 +63,7 @@
     margin-bottom: 32px;
 }
 
+/* Detailed descriptive overview */
 .description {
     font-size: 16px;
     font-weight: 500;
@@ -55,20 +72,24 @@
     margin-bottom: 68px;
 }
 
+/* Segmented specifications section */
 .section {
     padding: 24px 0;
     border-bottom: 1px solid var(--color-border);
 }
 
+/* Remove top padding for section following the header */
 .headerBlock + .section {
     padding-top: 0;
 }
 
+/* Last section clears trailing border line */
 .section:last-child {
     padding-bottom: 0;
     border-bottom: none;
 }
 
+/* Section headline */
 .sectionTitle {
     font-size: 20px;
     font-weight: 600;
@@ -77,12 +98,14 @@
     margin-bottom: 20px;
 }
 
+/* Specifications list */
 .list {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
+/* Individual spec item row */
 .listItem {
     display: flex;
     align-items: center;
@@ -93,6 +116,7 @@
     color: var(--color-dark);
 }
 
+/* Leading bullet icon */
 .icon {
     font-size: 18px;
     color: var(--color-dark);

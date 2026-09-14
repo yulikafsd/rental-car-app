@@ -23,20 +23,38 @@ interface FormErrors {
     comment?: string;
 }
 
+/* Base form initial state values */
 const INITIAL_VALUES: FormValues = {
     name: "",
     email: "",
     comment: "",
 };
 
+/* Email syntax verification pattern */
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* Field definition metadata for DRY rendering */
+interface FieldConfig {
+    name: keyof FormValues;
+    label: string;
+    type: "text" | "email" | "textarea";
+    autoComplete?: string;
+}
+
+const FIELDS_CONFIG: FieldConfig[] = [
+    { name: "name", label: "Name*", type: "text", autoComplete: "name" },
+    { name: "email", label: "Email*", type: "email", autoComplete: "email" },
+    { name: "comment", label: "Comment", type: "textarea" },
+];
+
+/* Interactive booking form collecting client contact information and request details */
 export default function BookingForm({ carId }: BookingFormProps) {
     const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
     const [errors, setErrors] = useState<FormErrors>({});
 
     const { mutate: bookCar, isPending } = useBookCar();
 
+    /* Validate individual form fields */
     const validateField = (
         name: keyof FormValues,
         value: string,
@@ -51,7 +69,8 @@ export default function BookingForm({ carId }: BookingFormProps) {
 
         if (name === "email") {
             if (!trimmed) return "Please enter your email.";
-            if (!EMAIL_REGEX.test(trimmed)) return "Please enter your email.";
+            if (!EMAIL_REGEX.test(trimmed))
+                return "Please enter a valid email address.";
         }
 
         if (name === "comment") {
@@ -61,6 +80,7 @@ export default function BookingForm({ carId }: BookingFormProps) {
         return undefined;
     };
 
+    /* Controlled input update handler */
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -72,6 +92,7 @@ export default function BookingForm({ carId }: BookingFormProps) {
         }
     };
 
+    /* Validate field when focus leaves input */
     const handleBlur = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -80,6 +101,7 @@ export default function BookingForm({ carId }: BookingFormProps) {
         setErrors((prev) => ({ ...prev, [name]: fieldError }));
     };
 
+    /* Form submission and API invocation handler */
     const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -119,115 +141,103 @@ export default function BookingForm({ carId }: BookingFormProps) {
 
     return (
         <div className={styles.formWrapper}>
-            <h3 className={styles.title}>Book your car now</h3>
+            {/* Form titles */}
+            <h3 id="booking-form-title" className={styles.title}>
+                Book your car now
+            </h3>
             <p className={styles.subtitle}>
                 Stay connected! We are always ready to help you.
             </p>
 
-            <form className={styles.form} onSubmit={handleSubmit} noValidate>
-                {/* Name */}
-                <div className={styles.fieldGroup}>
-                    <input
-                        id="booking-name"
-                        type="text"
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder=" "
-                        className={`${styles.input} ${
-                            errors.name ? styles.inputError : ""
-                        }`}
-                    />
-                    <label
-                        htmlFor="booking-name"
-                        className={`${styles.fieldLabel} ${
-                            errors.name ? styles.labelError : ""
-                        }`}
-                    >
-                        Name*
-                    </label>
+            {/* Accessible form linked with its title via aria-labelledby */}
+            <form
+                className={styles.form}
+                onSubmit={handleSubmit}
+                noValidate
+                aria-labelledby="booking-form-title"
+            >
+                {/* Iterated fields */}
+                {FIELDS_CONFIG.map(({ name, label, type, autoComplete }) => {
+                    const fieldId = `booking-${name}`;
+                    const errorId = `booking-${name}-error`;
+                    const error = errors[name];
+                    const hasError = Boolean(error);
+                    const isTextarea = type === "textarea";
 
-                    {errors.name && (
-                        <>
-                            <FiAlertCircle className={styles.errorIcon} />
-                            <span className={styles.errorText}>
-                                {errors.name}
-                            </span>
-                        </>
-                    )}
-                </div>
+                    const inputClassName = `${
+                        isTextarea ? styles.textarea : styles.input
+                    } ${hasError ? styles.inputError : ""}`;
 
-                {/* Email */}
-                <div className={styles.fieldGroup}>
-                    <input
-                        id="booking-email"
-                        type="email"
-                        name="email"
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder=" "
-                        className={`${styles.input} ${
-                            errors.email ? styles.inputError : ""
-                        }`}
-                    />
-                    <label
-                        htmlFor="booking-email"
-                        className={`${styles.fieldLabel} ${
-                            errors.email ? styles.labelError : ""
-                        }`}
-                    >
-                        Email*
-                    </label>
+                    return (
+                        <div key={name} className={styles.fieldGroup}>
+                            {isTextarea ? (
+                                <textarea
+                                    id={fieldId}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    placeholder=" "
+                                    aria-invalid={hasError}
+                                    aria-describedby={
+                                        hasError ? errorId : undefined
+                                    }
+                                    className={inputClassName}
+                                />
+                            ) : (
+                                <input
+                                    id={fieldId}
+                                    type={type}
+                                    name={name}
+                                    value={values[name]}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    autoComplete={autoComplete}
+                                    placeholder=" "
+                                    aria-invalid={hasError}
+                                    aria-describedby={
+                                        hasError ? errorId : undefined
+                                    }
+                                    className={inputClassName}
+                                />
+                            )}
 
-                    {errors.email && (
-                        <>
-                            <FiAlertCircle className={styles.errorIcon} />
-                            <span className={styles.errorText}>
-                                {errors.email}
-                            </span>
-                        </>
-                    )}
-                </div>
+                            <label
+                                htmlFor={fieldId}
+                                className={`${styles.fieldLabel} ${
+                                    hasError ? styles.labelError : ""
+                                }`}
+                            >
+                                {label}
+                            </label>
 
-                {/* Comment */}
-                <div className={styles.fieldGroup}>
-                    <textarea
-                        id="booking-comment"
-                        name="comment"
-                        value={values.comment}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder=" "
-                        className={`${styles.textarea} ${
-                            errors.comment ? styles.inputError : ""
-                        }`}
-                    />
-                    <label
-                        htmlFor="booking-comment"
-                        className={`${styles.fieldLabel} ${
-                            errors.comment ? styles.labelError : ""
-                        }`}
-                    >
-                        Comment
-                    </label>
+                            {/* Error feedback linked via id and declared as alert landmark */}
+                            {hasError && (
+                                <div className={styles.errorContainer}>
+                                    <FiAlertCircle
+                                        className={styles.errorIcon}
+                                        aria-hidden="true"
+                                    />
+                                    <span
+                                        id={errorId}
+                                        role="alert"
+                                        className={styles.errorText}
+                                    >
+                                        {error}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
 
-                    {errors.comment && (
-                        <>
-                            <FiAlertCircle className={styles.errorIcon} />
-                            <span className={styles.errorText}>
-                                {errors.comment}
-                            </span>
-                        </>
-                    )}
-                </div>
-
+                {/* Form action button */}
                 <Button
                     type="submit"
                     variant="primary"
                     size="full"
                     disabled={isPending}
+                    aria-disabled={isPending ? "true" : undefined}
                 >
                     {isPending ? "Sending..." : "Send"}
                 </Button>

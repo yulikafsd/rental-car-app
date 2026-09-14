@@ -1,3 +1,4 @@
+/* Semi-transparent overlay constrained to parent container */
 .overlay {
     position: absolute;
     inset: 0;
@@ -6,12 +7,16 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(245, 245, 245, 0.89);
+    -webkit-backdrop-filter: blur(
+        2px
+    ); /* Safari support prefix alongside standard backdrop-filter */
     backdrop-filter: blur(2px);
     border-radius: 16px;
     pointer-events: all;
     touch-action: none;
 }
 
+/* Centered modal card pinned to 40vh during container scroll */
 .modalCard {
     position: sticky;
     top: 40vh;
@@ -27,6 +32,7 @@
     text-align: center;
 }
 
+/* Circular spinner with variable-based sizing and continuous rotation */
 .spinner {
     --color-1: var(--color-gray-200);
     --color-2: var(--color-light-blue);
@@ -43,6 +49,7 @@
     margin-bottom: 32px;
 }
 
+/* Keyframes for full 360-degree continuous spinner rotation */
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
@@ -52,6 +59,7 @@
     }
 }
 
+/* Primary loading title */
 .title {
     font-size: 24px;
     font-weight: 600;
@@ -60,6 +68,7 @@
     margin-bottom: 18px;
 }
 
+/* Secondary helper description text */
 .subtitle {
     font-size: 16px;
     font-weight: 500;

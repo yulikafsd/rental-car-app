@@ -1,7 +1,4 @@
-.customSelectWrapper {
-    position: relative;
-}
-
+/* Select field group container */
 .filterGroup {
     display: flex;
     flex-direction: column;
@@ -9,12 +6,19 @@
     position: relative;
 }
 
+/* Category field title */
 .filterLabel {
     color: var(--color-gray-text);
     font-size: 12px;
     line-height: 1.33;
 }
 
+/* Relative positioning wrapper for anchor positioning of dropdown list */
+.customSelectWrapper {
+    position: relative;
+}
+
+/* Interactive select button */
 .customSelectButton {
     display: flex;
     align-items: center;
@@ -24,63 +28,71 @@
     border-radius: 12px;
     background-color: var(--color-white);
     border: 1px solid transparent;
-
-    color: var(--main, #101828);
-
+    color: var(--color-dark);
     font-weight: 500;
     line-height: 1.25;
-
     cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 0;
+
+    transition:
+        outline-color 250ms ease-in-out,
+        outline-offset 250ms ease-in-out,
+        color 250ms ease-in-out;
 }
 
+/* Accessible keyboard focus styling */
 .customSelectButton:focus-visible {
-    outline: 2px solid var(--color-light-blue);
+    outline-color: var(--color-light-blue);
     outline-offset: 2px;
 }
 
+/* Width modifier for brand filter */
 .button_brand_select {
     width: 204px;
 }
 
+/* Width modifier for price filter */
 .button_price_select {
     width: 196px;
 }
 
+/* Internal icon dimensions */
 .customSelectButton svg {
     font-size: 18px;
     color: var(--color-dark);
     flex-shrink: 0;
 }
 
+/* Floating option listbox popup */
 .customSelectList {
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
     width: 100%;
     overflow-y: auto;
-
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding: 14px 18px;
     z-index: 50;
-
     background-color: var(--color-white);
     border: 1px solid var(--color-white);
     border-radius: 12px;
     box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
-    list-style: none;
-    margin: 0;
 }
 
+/* Brand list scroll height */
 .list_brand_select {
     max-height: 272px;
 }
 
+/* Price list scroll height */
 .list_price_select {
     max-height: 188px;
 }
 
+/* Select option line */
 .customSelectOption {
     font-size: 16px;
     font-weight: 500;
@@ -90,11 +102,13 @@
     transition: color 250ms ease-in-out;
 }
 
+/* Interactive hover and active states */
 .customSelectOption:hover,
 .customSelectOption.selected {
     color: var(--color-dark);
 }
 
+/* Scrollbar customizations */
 .customSelectList::-webkit-scrollbar {
     width: 8px;
     height: 12px;
