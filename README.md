@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RentalCar — Car Rental Web Application
 
-## Getting Started
+A responsive, production-ready car rental application built with **Next.js (App Router)**, **TypeScript**, **TanStack Query**, and **Zustand**. The application provides an interactive vehicle catalog with backend filtering and infinite pagination, detailed technical specification views, an accessible booking system with toast notifications, custom accessible UI controls, and persistent client-side favorites management.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Live Demo
+
+- **Production Deployment:** [rental-car-app-yu-za.vercel.app](https://rental-car-app-yu-za.vercel.app)
+- **Repository:** [github.com/yulikafsd/rental-car-app](https://github.com/yulikafsd/rental-car-app)
+
+---
+
+## 🛠️ Tech Stack & Tools
+
+- **Next.js (App Router)** — React framework handling hybrid Server/Client components, dynamic routing, metadata generation, and image optimization.
+- **TypeScript** — Strict static typing across API contracts, domain entities, filter schemas, and component interfaces.
+- **@tanstack/react-query** — Asynchronous server-state management using `useInfiniteQuery` for paginated car retrieval, automated caching, and refetch handling.
+- **Zustand** — Lightweight client state store with `persist` middleware for persistent user favorites in `localStorage`.
+- **React Hot Toast** — Accessible interactive toast notifications for booking confirmations and form submission feedback.
+- **CSS Modules & Design Tokens** — Scoped, collision-free styling with design tokens defined as CSS custom properties in `:root` (Flexbox & Grid layout models, zero style duplication).
+- **React Icons** — Accessible icon set (`react-icons/fi`).
+- **next/image** — High-performance image loading with responsive slot sizing, layout shift (CLS) stabilization, and AVIF/WebP delivery.
+
+---
+
+## ✨ Features
+
+- **Dynamic Routing & Navigation:**
+    - `/` — Homepage with an engaging hero banner and direct CTA leading to the catalog.
+    - `/catalog` — Paginated car catalog featuring backend filter synchronization via URL search parameters.
+    - `/catalog/[carId]` — Vehicle specification overview opening in a new tab with interactive rental booking.
+- **Custom Accessible UI Controls:**
+    - **Custom Select:** Fully accessible dropdown with custom styling, custom scrollbars, keyboard navigation (`Escape`, `Enter`, `Space`), and WAI-ARIA listbox attributes.
+    - **Custom Checkbox:** Styled accessible checkbox with proper focus states and keyboard toggling.
+    - **Mileage Inputs:** Dual range numerical inputs bundled semantically in a fieldset.
+- **Backend Search & Filtering:**
+    - Brand selection dropdown populated via dynamic filters endpoint.
+    - Hourly rate selector with custom prefix formatting.
+    - Dual numeric mileage range filter (`minMileage` and `maxMileage`).
+    - URL query parameter synchronization enabling shareable filter states.
+    - Instant filter reset functionality.
+- **Infinite Pagination (`Load More`):**
+    - Continuous data fetching powered by TanStack Query's `useInfiniteQuery`.
+    - Seamless appending of subsequent pages preserving active search filters.
+- **Persistent Favorites System:**
+    - Instant bookmarking of vehicles saved across browser sessions using Zustand `persist` middleware in `localStorage`.
+    - Dedicated "Only favorites" filter toggle to browse saved cars.
+- **Rental Booking & Toast Feedback:**
+    - Complete car technical specifications: engine, fuel consumption, mileage, rental conditions, and functional accessories.
+    - Validated booking form sending data directly to the backend API.
+    - Accessible feedback with **React Hot Toast** confirming booking success.
+- **Comprehensive Accessibility (a11y & WCAG 2.2):**
+    - Valid semantic landmarks (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<fieldset>`, `<ul>`/`<li>`).
+    - Screen-reader-friendly ARIA attributes (`aria-current`, `aria-label`, `aria-expanded`, `aria-controls`, `aria-busy`, `aria-live`, `role="alert"`).
+    - Smooth, accessible keyboard focus indicators (`:focus-visible` with animated outline transitions).
+    - Layout Shift mitigation (CLS) with locked scrollbar margins (`scrollbar-gutter: stable`) and fixed image slot dimensions.
+- **SEO & Dynamic Metadata:**
+    - Route-level metadata coverage using Next.js root `metadataBase` and title templates (`%s | Rental Car App`).
+    - Dynamic `generateMetadata` implementation on `/catalog/[carId]` generating vehicle-specific titles, descriptions, and Open Graph cards.
+
+---
+
+## 📂 Project Structure
+
+```text
+rental-car-app/
+├── app/
+│   ├── catalog/
+│   │   ├── [carId]/
+│   │   │   ├── CarDetailsView.tsx       # Client presentation view for car details
+│   │   │   ├── page.module.css          # Car details layout styles
+│   │   │   └── page.tsx                 # Server component with dynamic generateMetadata
+│   │   ├── CatalogView.module.css       # Catalog grid and container styles
+│   │   ├── CatalogView.tsx              # Interactive catalog with infinite query handling
+│   │   └── page.tsx                     # Catalog route boundary with accessible headings
+│   ├── globals.css                      # Global resets, typography tokens, and CSS variables
+│   ├── layout.tsx                       # Root layout with Header, Footer, and QueryProvider
+│   ├── page.module.css                  # Home hero section styles
+│   └── page.tsx                         # Landing homepage with main CTA
+├── components/
+│   ├── BookingForm/                     # Rental request form with submission handling & toasts
+│   ├── Button/                          # Polymorphic, reusable accessible button
+│   ├── CarCard/                         # Catalog car card with mock dimension slots
+│   ├── CarInfo/                         # Technical specifications and conditions list
+│   ├── ErrorMessage/                    # Resilient error display with retry triggers
+│   ├── Filters/                         # Search bar orchestrating filter controls
+│   │   ├── CustomCheckbox/              # Custom accessible checkbox input
+│   │   ├── CustomSelect/                # WAI-ARIA compliant keyboard dropdown
+│   │   └── MileageFilter/               # Fieldset-grouped dual mileage inputs
+│   ├── Footer/                          # Global footer
+│   ├── Header/                          # Global navigation with active route detection
+│   ├── Loader/                          # Status loading indicator with CLS stabilization
+│   └── NoResults/                       # Empty state display with reset filter action
+├── hooks/
+│   ├── useCarDetails.ts                 # Single car data query hook
+│   ├── useCarFilters.ts                 # Available brands query hook
+│   └── useCars.ts                       # Infinite query car pagination hook
+├── providers/
+│   └── QueryProvider.tsx                # TanStack React Query client setup
+├── public/                              # Static brand assets, icons, and illustrations
+├── services/
+│   └── api.ts                           # Axios API client and backend service calls
+├── store/
+│   └── useFavoritesStore.ts             # Zustand persistent favorites store
+└── types/
+    └── car.ts                           # Domain models, filter types, and API schemas
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Getting Started Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js >= 18.18.0
+- npm >= 9.0.0
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    git clone [https://github.com/yulikafsd/rental-car-app.git](https://github.com/yulikafsd/rental-car-app.git)
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Navigate to the project directory:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```bash
+    cd rental-car-app
+    ```
 
-## Deploy on Vercel
+3. Install dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm install
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Set up environment variables:
+   Create a .env.local file in the root directory and add your NoteHub API Token:
+
+    ```bash
+     NEXT_PUBLIC_API_URL=https://car-rental-api.goit.global
+    ```
+
+5. Start the development server:
+    ```Bash
+    npm run dev
+    ```
+
+Open http://localhost:3000 in your browser.
+
+### **Available Scripts**:
+
+- npm run dev — Starts the Next.js local development server.
+- npm run build — Creates an optimized production build.
+- npm run start — Boots the production server.
+- npm run lint — Runs ESLint checks across the codebase.
+
+👤 Author: Yuliia Zahorovska (GitHub: @yulikafsd)
